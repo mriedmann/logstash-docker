@@ -7,4 +7,4 @@
 #[[ $LOGSTASH_TRACE ]] && set -x
 
 # Fire up logstash!
-exec /opt/logstash/bin/logstash agent -f /etc/logstash.conf
+exec /opt/logstash/bin/logstash agent -f /etc/logstash/conf.d/ web

@@ -23,9 +23,6 @@ RUN cd /tmp && \
 # Install contrib plugins
 RUN /opt/logstash/bin/plugin install contrib
  
-# Add Config
-ADD logstash.conf /etc/logstash.conf
- 
 # Add service script
 RUN mkdir /etc/service/logstash
 ADD logstash-run.sh /etc/service/logstash/run
@@ -37,8 +34,12 @@ ENV SINCEDB_DIR /var/sincedb
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Add Config
+RUN mkdir -p /etc/logstash/conf.d/
+ADD conf.d/* /etc/logstash/conf.d/
+
 # Volumes
 VOLUME ["/var/sincedb"]
 
 # Expose Ports: Elasticsearch HTTP, ES transport, Kibana, Syslog
-EXPOSE 9200 9300 9292 514
+EXPOSE 9200 9300 9292 5544
